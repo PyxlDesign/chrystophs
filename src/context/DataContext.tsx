@@ -78,7 +78,7 @@ interface DataProviderProps {
 export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
     const [schedule, setSchedule] = useState<ScheduleItem[]>([
         { day: 'Monday', time: '8:00 PM - 11:00 PM EST', game: 'Arc Raiders', status: 'Extraction Ops', isLive: false },
-        { day: 'Tuesday', time: '8:00 pM - 11:00 PM EST', game: 'Coding', status: 'Development', isLive: false },
+        { day: 'Tuesday', time: '8:00 PM - 11:00 PM EST', game: 'Coding', status: 'Development', isLive: false },
         { day: 'Wednesday', time: '8:00 PM - 11:00 PM EST', game: 'Arc Raiders', status: 'High Stakes Raids', isLive: false },
         { day: 'Thursday', time: 'OFF', game: 'Rest & Restock', status: 'Maintenance', isLive: false },
         { day: 'Friday', time: '8:00 PM - 1:00 AM EST', game: 'Coding', status: 'Development', isLive: false },
