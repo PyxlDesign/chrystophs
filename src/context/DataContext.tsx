@@ -167,8 +167,8 @@ export const DataProvider: React.FC<DataProviderProps> = ({ children }) => {
         const [hour, minute] = time.split(':').map(Number);
         let hour24 = hour;
 
-        if (period === 'PM' && hour !== 12) hour24 += 12;
-        if (period === 'AM' && hour === 12) hour24 = 0;
+        if (period.toLocaleLowerCase() === 'pm' && hour !== 12) hour24 += 12;
+        if (period.toLocaleLowerCase() === 'am' && hour === 12) hour24 = 0;
 
         return hour24 * 60 + minute;
     };
