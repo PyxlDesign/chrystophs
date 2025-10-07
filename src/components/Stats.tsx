@@ -1,11 +1,25 @@
 import { Users, Clock, Award, Crosshair } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function Stats() {
+  const { streamStats } = useData();
+
+  const formatNumber = (num: number, showPlus: boolean = false) => {
+    if (num >= 1000000) {
+      const mValue = Math.round(num / 100000) / 10; // Round to 1 decimal place
+      return `${mValue}M${showPlus ? '+' : ''}`;
+    } else if (num >= 1000) {
+      const kValue = Math.round(num / 100) / 10; // Round to 1 decimal place
+      return `${kValue}K${showPlus ? '+' : ''}`;
+    }
+    return `${num}${showPlus ? '+' : ''}`;
+  };
+
   const stats = [
-    { icon: Users, value: '10K+', label: 'Raiders', color: 'from-purple-500 to-pink-500' },
-    { icon: Clock, value: '2K+', label: 'Hours Streamed', color: 'from-purple-500 to-blue-500' },
-    { icon: Award, value: '500+', label: 'Successful Extractions', color: 'from-purple-500 to-cyan-500' },
-    { icon: Crosshair, value: '95%', label: 'Accuracy Rate', color: 'from-purple-500 to-violet-500' }
+    { icon: Users, value: formatNumber(streamStats.followers, true), label: 'Followers', color: 'from-purple-500 to-pink-500' },
+    { icon: Clock, value: formatNumber(streamStats.hoursStreamed, true), label: 'Hours Streamed', color: 'from-purple-500 to-blue-500' },
+    { icon: Award, value: formatNumber(streamStats.totalStreams, true), label: 'Total Streams', color: 'from-purple-500 to-cyan-500' },
+    { icon: Crosshair, value: formatNumber(streamStats.avgViewers), label: 'Avg Viewers', color: 'from-purple-500 to-violet-500' }
   ];
 
   return (

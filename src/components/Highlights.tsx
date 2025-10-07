@@ -1,32 +1,32 @@
 import { Play, ExternalLink } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function Highlights() {
-  const highlights = [
-    {
-      title: 'Legendary Extract Under Fire',
-      views: '125K',
-      duration: '12:45',
-      thumbnail: 'https://images.pexels.com/photos/3945683/pexels-photo-3945683.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      title: 'Solo Squad Wipe Clutch',
-      views: '98K',
-      duration: '8:32',
-      thumbnail: 'https://images.pexels.com/photos/7915442/pexels-photo-7915442.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      title: 'Max Loot Speedrun Record',
-      views: '156K',
-      duration: '15:20',
-      thumbnail: 'https://images.pexels.com/photos/3165335/pexels-photo-3165335.jpeg?auto=compress&cs=tinysrgb&w=800'
-    },
-    {
-      title: 'Tournament Finals Victory',
-      views: '203K',
-      duration: '24:15',
-      thumbnail: 'https://images.pexels.com/photos/7862604/pexels-photo-7862604.jpeg?auto=compress&cs=tinysrgb&w=800'
+  const { highlights } = useData();
+
+  const formatViews = (views: string) => {
+    // If views already contains 'K' or 'M', check if it should be formatted differently
+    if (views.includes('K') || views.includes('M')) {
+      const number = parseFloat(views.replace(/[KM]/g, ''));
+      const unit = views.includes('M') ? 'M' : 'K';
+
+      if (unit === 'K' && number < 1) {
+        // If less than 1K (like 0.5K), convert back to actual number
+        return Math.round(number * 1000).toString();
+      }
+      return views; // Keep original formatting for 1K+ or M
     }
-  ];
+
+    // If it's a plain number, format appropriately
+    const num = parseInt(views);
+    if (isNaN(num)) return views; // Return original if not a number
+
+    if (num >= 1000) {
+      const kValue = Math.round(num / 100) / 10; // Round to 1 decimal place
+      return kValue >= 1 ? `${kValue}K` : num.toString();
+    }
+    return num.toString();
+  };
 
   return (
     <section className="relative py-32 px-6 overflow-hidden">
@@ -48,10 +48,12 @@ export default function Highlights() {
         </div>
 
         <div className="grid md:grid-cols-2 gap-8">
-          {highlights.map((highlight, index) => (
+          {highlights.map((highlight) => (
             <a
-              key={index}
-              href="#"
+              key={highlight.id}
+              href={highlight.url}
+              target="_blank"
+              rel="noopener noreferrer"
               className="group relative bg-black/40 border border-purple-500/20 hover:border-purple-500/60 transition-all duration-500 overflow-hidden clip-corner"
             >
               <div className="absolute inset-0 bg-linear-to-br from-purple-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
@@ -76,7 +78,7 @@ export default function Highlights() {
                 </div>
 
                 <div className="absolute bottom-4 left-4 bg-black/80 px-3 py-1 text-sm font-semibold text-purple-400 backdrop-blur-xs">
-                  {highlight.views} views
+                  {formatViews(highlight.views)} views
                 </div>
               </div>
 

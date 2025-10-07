@@ -1,12 +1,15 @@
 import { Twitch, Youtube, Twitter, Instagram, MessageCircle } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function Social() {
+  const { socialLinks } = useData();
+
   const socials = [
     {
       icon: Twitch,
       name: 'Twitch',
       handle: '@chrystophs',
-      link: '#',
+      link: socialLinks.twitch,
       color: 'from-purple-600 to-purple-400',
       hoverColor: 'hover:border-purple-400'
     },
@@ -14,7 +17,7 @@ export default function Social() {
       icon: Youtube,
       name: 'YouTube',
       handle: '@chrystophs',
-      link: '#',
+      link: socialLinks.youtube,
       color: 'from-red-600 to-red-400',
       hoverColor: 'hover:border-red-400'
     },
@@ -22,7 +25,7 @@ export default function Social() {
       icon: Twitter,
       name: 'Twitter',
       handle: '@chrystophs',
-      link: '#',
+      link: socialLinks.twitter,
       color: 'from-blue-500 to-blue-300',
       hoverColor: 'hover:border-blue-400'
     },
@@ -30,7 +33,7 @@ export default function Social() {
       icon: Instagram,
       name: 'Instagram',
       handle: '@chrystophs',
-      link: '#',
+      link: socialLinks.instagram,
       color: 'from-pink-600 via-purple-600 to-orange-500',
       hoverColor: 'hover:border-pink-400'
     },
@@ -38,7 +41,7 @@ export default function Social() {
       icon: MessageCircle,
       name: 'Discord',
       handle: 'Join Server',
-      link: '#',
+      link: socialLinks.discord || '#',
       color: 'from-indigo-600 to-indigo-400',
       hoverColor: 'hover:border-indigo-400'
     }
@@ -99,7 +102,9 @@ export default function Social() {
               Subscribe and turn on notifications to never miss a raid
             </p>
             <a
-              href="#"
+              href={socialLinks.twitch}
+              target="_blank"
+              rel="noopener noreferrer"
               className="inline-block px-10 py-4 bg-purple-600 hover:bg-purple-500 transition-all duration-300 clip-corner group"
             >
               <span className="font-bold text-lg uppercase tracking-wider text-white">

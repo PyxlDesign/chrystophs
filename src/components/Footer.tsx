@@ -1,6 +1,9 @@
 import { Heart, Terminal } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function Footer() {
+  const { socialLinks } = useData();
+
   return (
     <footer className="relative border-t border-purple-500/20 py-12 px-6 overflow-hidden">
       <div className="absolute inset-0 bg-linear-to-b from-transparent to-purple-950/10"></div>
@@ -30,18 +33,18 @@ export default function Footer() {
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
+                <a href="#highlights" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
                   Highlights
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
-                  Merchandise
+                <a href={socialLinks.twitch} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
+                  Twitch
                 </a>
               </li>
               <li>
-                <a href="#" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
-                  Contact
+                <a href={socialLinks.discord || '#'} target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-purple-400 transition-colors duration-300">
+                  Discord
                 </a>
               </li>
             </ul>

@@ -1,6 +1,9 @@
 import { Play, Radio } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function Hero() {
+  const { socialLinks, isAnyStreamLive } = useData();
+
   return (
     <div className="relative min-h-screen flex items-center justify-center overflow-hidden">
       <div className="absolute inset-0 retro-grid opacity-30"></div>
@@ -10,19 +13,28 @@ export default function Hero() {
       <div className="absolute top-0 left-0 w-full h-1 bg-linear-to-r from-transparent via-purple-500 to-transparent"></div>
 
       <div className="absolute top-8 left-8 flex items-center gap-3 z-20">
-        <div className="w-12 h-12 rounded-full bg-purple-500/20 border-2 border-purple-500 flex items-center justify-center animate-pulse">
-          <Radio className="w-6 h-6 text-purple-400" />
+        <div className={`w-12 h-12 rounded-full border-2 flex items-center justify-center ${isAnyStreamLive
+          ? 'bg-red-500/20 border-red-500 animate-pulse'
+          : 'bg-purple-500/20 border-purple-500 animate-pulse'
+          }`}>
+          <Radio className={`w-6 h-6 ${isAnyStreamLive ? 'text-red-400' : 'text-purple-400'
+            }`} />
         </div>
         <div className="text-sm font-medium">
-          <div className="text-purple-400 uppercase tracking-wider">Status</div>
-          <div className="text-gray-300">Ready to Extract</div>
+          <div className={`uppercase tracking-wider ${isAnyStreamLive ? 'text-red-400' : 'text-purple-400'
+            }`}>
+            {isAnyStreamLive ? 'LIVE NOW' : 'Status'}
+          </div>
+          <div className="text-gray-300">
+            {isAnyStreamLive ? 'Streaming Now!' : 'Ready to Extract'}
+          </div>
         </div>
       </div>
 
       <div className="relative z-10 text-center px-6 max-w-6xl mx-auto">
         <div className="mb-12 flex justify-center">
           <div className="relative group">
-            <div className="absolute -inset-4 bg-purple-500/10 blur-3xl group-hover:bg-purple-500/20 transition-all duration-500"></div>
+            <div className="absolute -inset-4 bg-sky-500/10 blur-3xl group-hover:bg-sky-500/20 transition-all duration-500"></div>
             <img
               src="/chrystophs-logo.png"
               alt="Chrystophs Logo"
@@ -33,8 +45,8 @@ export default function Hero() {
 
         <div className="space-y-6 mb-12">
           <div className="inline-block">
-            <div className="relative">
-              <div className="absolute inset-0 bg-purple-500/40 blur-xl"></div>
+            <div className="relative group">
+              <div className="absolute inset-0 bg-radial from-sky-600 to-purple-500 blur-xl opacity-40 group-hover:opacity-50 transition-all duration-1000 group-hover:scale-105"></div>
               <h1 className="relative text-6xl md:text-8xl font-black tracking-tight text-white">
                 CHRYSTOPHS
               </h1>
@@ -55,7 +67,7 @@ export default function Hero() {
 
         <div className="flex flex-col sm:flex-row gap-6 justify-center items-center">
           <a
-            href="https://twitch.tv/chrystophs"
+            href={socialLinks.twitch}
             target="_blank"
             rel="noopener noreferrer"
             className="group relative px-10 py-5 bg-purple-600 hover:bg-purple-500 transition-all duration-300 clip-corner overflow-hidden"
@@ -63,7 +75,7 @@ export default function Hero() {
             <div className="absolute inset-0 bg-linear-to-r from-purple-400/0 via-white/20 to-purple-400/0 translate-x-[-200%] group-hover:translate-x-[200%] transition-transform duration-700"></div>
             <div className="relative flex items-center gap-3 font-bold text-lg uppercase tracking-wider">
               <Play className="w-5 h-5 fill-current" />
-              Watch Live
+              {isAnyStreamLive ? 'Join Live Stream' : 'Watch Live'}
             </div>
           </a>
 

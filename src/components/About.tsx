@@ -1,28 +1,21 @@
 import { Target, Zap, Trophy, Shield } from 'lucide-react';
+import { useData } from '../context/DataContext';
 
 export default function About() {
-  const features = [
-    {
-      icon: Target,
-      title: 'Precision Gameplay',
-      description: 'Tactical decision-making and calculated risks in every raid'
-    },
-    {
-      icon: Zap,
-      title: 'High Energy',
-      description: 'Non-stop action with engaging commentary and community interaction'
-    },
-    {
-      icon: Trophy,
-      title: 'Victory Focused',
-      description: 'Consistent wins, legendary loot, and clutch extractions'
-    },
-    {
-      icon: Shield,
-      title: 'Community First',
-      description: 'Building a crew of raiders who support and elevate each other'
-    }
-  ];
+  const { features: featuresData } = useData();
+
+  // Icon mapping
+  const iconMap = {
+    Target,
+    Zap,
+    Trophy,
+    Shield
+  };
+
+  const features = featuresData.map(feature => ({
+    ...feature,
+    icon: iconMap[feature.icon as keyof typeof iconMap] || Target
+  }));
 
   return (
     <section className="relative py-32 px-6 overflow-hidden">
